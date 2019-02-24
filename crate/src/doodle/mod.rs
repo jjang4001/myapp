@@ -2,18 +2,20 @@ use std::cell::Cell;
 use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
-use web_sys::{MessageEvent};
 
-use super::examples;
+use super::messaging;
 
 #[wasm_bindgen]
 pub fn start_doodle(ws_address: &str) -> Result<(), JsValue> {
-    // log(&format!("bye-- {}", name()));
     let document = web_sys::window().unwrap().document().unwrap();
     let canvas = document
         .create_element("canvas")?
         .dyn_into::<web_sys::HtmlCanvasElement>()?;
-    document.body().unwrap().append_child(&canvas)?;
+    let first = document.body().unwrap().child_nodes().get(0).unwrap();
+    document
+        .body()
+        .unwrap()
+        .insert_before(&canvas, Some(&first))?;
     canvas.set_width(640);
     canvas.set_height(480);
     canvas.style().set_property("border", "solid")?;
@@ -25,8 +27,7 @@ pub fn start_doodle(ws_address: &str) -> Result<(), JsValue> {
 }
 
 fn handle_context_events(context: web_sys::CanvasRenderingContext2d, canvas: web_sys::HtmlCanvasElement, ws_address: &str) -> Result<(), JsValue> {
-    let a = examples::BindgenExamples::new(0);
-    a.console_log("bye".to_string());
+    let m = messaging::Messenger::new(ws_address);
 
     // color
     context.set_stroke_style(&JsValue::from_str("rgb(255,0,0,0.5)"));
@@ -51,7 +52,7 @@ fn handle_context_events(context: web_sys::CanvasRenderingContext2d, canvas: web
         let pressed = pressed.clone();
         let closure = Closure::wrap(Box::new(move |event: web_sys::MouseEvent| {
             if pressed.get() {
-
+                m.sendMessage("sending message on mouse move and pressed");
                 context.line_to(event.offset_x() as f64, event.offset_y() as f64);
                 context.stroke();
                 context.begin_path();
@@ -73,22 +74,6 @@ fn handle_context_events(context: web_sys::CanvasRenderingContext2d, canvas: web
         closure.forget();
     }
     Ok(())
-}
-
-#[wasm_bindgen(module = "./messaging")]
-extern "C" {
-    fn name() -> String;
-    // type Messenger;
-
-    // #[wasm_bindgen(constructor)]
-    // fn new(ws_address: &str) -> Messenger;
-
-    // #[wasm_bindgen(method)]
-    // fn sendMessage(this: &Messenger, msg: &str);
-    // #[wasm_bindgen(method)]
-    // fn onReceiveMessage(this: &Messenger, evt: MessageEvent);
-    // #[wasm_bindgen(method)]
-    // fn onCloseConnection(this: &Messenger);
 }
 
 #[wasm_bindgen]

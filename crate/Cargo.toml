@@ -32,6 +32,7 @@ features = [
   'MessageEvent',
   'MouseEvent',
   'Node',
+  'NodeList',
   'Window',
   'Performance',
   'PerformanceTiming',

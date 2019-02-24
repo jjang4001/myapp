@@ -1,11 +1,20 @@
 use wasm_bindgen::prelude::*;
+use web_sys::{MessageEvent};
 
 extern crate js_sys;
 
-use super::examples;
+#[wasm_bindgen(module = "../src/doodle/messaging")]
+extern "C" {
+    pub fn name() -> String;
+    pub type Messenger;
 
-#[wasm_bindgen]
-pub fn test(console_message: &str) {
-    let a = examples::BindgenExamples::new(0);
-    a.console_log(console_message.to_string());
+    #[wasm_bindgen(constructor)]
+    pub fn new(ws_address: &str) -> Messenger;
+
+    #[wasm_bindgen(method)]
+    pub fn sendMessage(this: &Messenger, msg: &str);
+    #[wasm_bindgen(method)]
+    fn onReceiveMessage(this: &Messenger, evt: MessageEvent);
+    #[wasm_bindgen(method)]
+    fn onCloseConnection(this: &Messenger);
 }
