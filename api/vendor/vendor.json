@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "49btm5V+LSXTPBqjLQ/OzdEWOj4=",
+			"path": "github.com/gorilla/handlers",
+			"revision": "7e6a874cdc0efb71a260254cc0e30d5415b6a5bb",
+			"revisionTime": "2018-12-12T23:28:18Z"
+		},
+		{
+			"checksumSHA1": "Aw8z8w/d+EFt8XCUYPjzSe0bPrU=",
+			"path": "github.com/gorilla/mux",
+			"revision": "cb4698366aa625048f3b815af6a0dea8aef9280a",
+			"revisionTime": "2018-06-05T21:15:56Z"
+		},
+		{
+			"checksumSHA1": "+WvAFQYdExJNUjKDAtuSs8O7ELg=",
+			"path": "github.com/gorilla/websocket",
+			"revision": "76e4896901ef89d253d69b528d3701dd146fe2ae",
+			"revisionTime": "2018-10-12T02:01:31Z"
+		}
+	],
+	"rootPath": "myapp/api"
+}

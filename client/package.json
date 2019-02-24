@@ -1,0 +1,49 @@
+{
+  "name": "my-app-client",
+  "version": "0.1.0",
+  "description": "app for me to host my mini projects",
+  "main": "index.js",
+  "bin": {
+    "create-wasm-app": ".bin/create-wasm-app.js"
+  },
+  "scripts": {
+    "build": "webpack --config webpack/webpack.prod.js",
+    "build:dev": "webpack --config webpack/webpack.dev.js",
+    "start": "NODE_ENV=production node server.js",
+    "start:dev": "webpack-dev-server --config webpack/webpack.dev.js",
+    "test": "jest-webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jjang4001/myapp.git"
+  },
+  "keywords": [
+    "webassembly",
+    "wasm",
+    "rust",
+    "webpack",
+    "bindgen"
+  ],
+  "author": "Junwon Jang",
+  "dependencies": {
+    "express": "^4.16.3",
+    "jji421-myapp": "0.1.0"
+  },
+  "devDependencies": {
+    "@wasm-tool/wasm-pack-plugin": "0.2.3",
+    "css-loader": "^0.28.0",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.5.2",
+    "sass-loader": "^7.1.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^0.16.1",
+    "ts-loader": "^5.1.1",
+    "typescript": "^3.0.3",
+    "webpack": "^4.16.3",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-middleware": "^3.3.0",
+    "webpack-dev-server": "^3.1.5",
+    "webpack-hot-middleware": "^2.24.0",
+    "webpack-merge": "~4.1.4"
+  }
+}
