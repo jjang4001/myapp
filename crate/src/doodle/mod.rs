@@ -11,6 +11,7 @@ pub fn start_doodle(ws_address: &str) -> Result<(), JsValue> {
     let canvas = document
         .create_element("canvas")?
         .dyn_into::<web_sys::HtmlCanvasElement>()?;
+
     let first = document.body().unwrap().child_nodes().get(0).unwrap();
     document
         .body()
@@ -19,21 +20,37 @@ pub fn start_doodle(ws_address: &str) -> Result<(), JsValue> {
     canvas.set_width(640);
     canvas.set_height(480);
     canvas.style().set_property("border", "solid")?;
+
     let context = canvas
         .get_context("2d")?
         .unwrap()
         .dyn_into::<web_sys::CanvasRenderingContext2d>()?;
-    handle_context_events(context, canvas, ws_address)
-}
 
-fn handle_context_events(context: web_sys::CanvasRenderingContext2d, canvas: web_sys::HtmlCanvasElement, ws_address: &str) -> Result<(), JsValue> {
-    let m = messaging::Messenger::new(ws_address);
+    let closure = Closure::wrap(Box::new(move |event: web_sys::InputEvent| {
+        log(&"color picker closure");
+        log(&event
+            .target().unwrap()
+            .dyn_ref::<web_sys::HtmlInputElement>().unwrap()
+            .value());
+    }) as Box<dyn FnMut(_)>);
+    document
+        .get_element_by_id("color-picker")
+        .expect("document should have .color-picker on DOM")
+        .dyn_ref::<web_sys::HtmlElement>()
+        .expect(".color-picker should be an HtmlElement")
+        .add_event_listener_with_callback("input", closure.as_ref().unchecked_ref())?;
+    closure.forget();
 
     // color
     context.set_stroke_style(&JsValue::from_str("rgb(255,0,0,0.5)"));
     // thickness
     context.set_line_width(10.0);
-    // 
+    handle_context_events(context, canvas, ws_address)
+}
+
+fn handle_context_events(context: web_sys::CanvasRenderingContext2d, canvas: web_sys::HtmlCanvasElement, ws_address: &str) -> Result<(), JsValue> {
+
+    let m = messaging::Messenger::new(ws_address);
     let context = Rc::new(context);
     let pressed = Rc::new(Cell::new(false));
     {
