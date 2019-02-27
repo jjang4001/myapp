@@ -13,7 +13,8 @@ var upgrader = websocket.Upgrader{
 	CheckOrigin:     func(r *http.Request) bool { return true },
 }
 
-func SocketHandler(w http.ResponseWriter, r *http.Request) {
+// DoodleHandler is the endpoint for receiving doodle messages
+func DoodleHandler(w http.ResponseWriter, r *http.Request) {
 	socket, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		fmt.Println(err)

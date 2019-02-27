@@ -5,20 +5,29 @@ use wasm_bindgen::JsCast;
 
 use super::messaging;
 
+mod canvas;
+mod menu;
+
 #[wasm_bindgen]
 pub fn start_doodle(ws_address: &str) -> Result<(), JsValue> {
-    let document = web_sys::window().unwrap().document().unwrap();
+    let window = web_sys::window().unwrap();
+    let document = window.document().unwrap();
     let canvas = document
         .create_element("canvas")?
         .dyn_into::<web_sys::HtmlCanvasElement>()?;
+
+    canvas.set_attribute("id", "myapp-canvas")?;
 
     let first = document.body().unwrap().child_nodes().get(0).unwrap();
     document
         .body()
         .unwrap()
         .insert_before(&canvas, Some(&first))?;
-    canvas.set_width(640);
-    canvas.set_height(480);
+
+    let mut width = window.inner_width().unwrap().as_f64().unwrap();
+    let mut height = window.inner_height().unwrap().as_f64().unwrap();
+    canvas.set_width(width as u32);
+    canvas.set_height(height as u32);
     canvas.style().set_property("border", "solid")?;
 
     let context = canvas
@@ -26,84 +35,45 @@ pub fn start_doodle(ws_address: &str) -> Result<(), JsValue> {
         .unwrap()
         .dyn_into::<web_sys::CanvasRenderingContext2d>()?;
 
-    handle_context_events(document, context, canvas, ws_address)
+    handle_context_events(window, document, context, canvas, &mut width, &mut height, ws_address)
 }
 
-fn handle_context_events(document: web_sys::Document, context: web_sys::CanvasRenderingContext2d, canvas: web_sys::HtmlCanvasElement, ws_address: &str) -> Result<(), JsValue> {
+fn handle_context_events(window: web_sys::Window, document: web_sys::Document, context: web_sys::CanvasRenderingContext2d, canvas: web_sys::HtmlCanvasElement, width: &mut f64, height: &mut f64, ws_address: &str) -> Result<(), JsValue> {
 
     let m = messaging::Messenger::new(ws_address);
     let context = Rc::new(context);
     let pressed = Rc::new(Cell::new(false));
     context.set_stroke_style(&JsValue::from_str("#ff0000"));
+    context.set_global_alpha(1.0);
+    context.set_line_width(3.0);
 
-    {
-        let context = context.clone();
-        let pressed = pressed.clone();
+    canvas::handle_mousedown_event(&context, &pressed, &canvas);
+    canvas::handle_mousemove_event(&context, &pressed, &canvas, m);
+    canvas::handle_mouseup_event(&context, &pressed, &canvas);
+    menu::handle_color_input_event(&context, &document);
+    menu::handle_alpha_input_event(&context, &document);
+    menu::handle_width_input_event(&context, &document);
+    // {
+    //     let tmp_window = window.clone();
+    //     let context = context.clone();
 
-        let closure = Closure::wrap(Box::new(move |event: web_sys::MouseEvent| {
-            // color
-            context.set_global_alpha(0.6);
-            context.set_line_width(10.0);
+    //     let window_resize_closure = Closure::wrap(Box::new(move |_event: web_sys::Event| {
+    //         let tmp_image_data = context.get_image_data(0.0, 0.0, *width, *height).unwrap();
+    //         let tmp_width = tmp_window.inner_width().unwrap().as_f64().unwrap();
+    //         let tmp_height = tmp_window.inner_height().unwrap().as_f64().unwrap();
+    //         context.canvas().unwrap().set_width(tmp_width as u32);
+    //         context.canvas().unwrap().set_height(tmp_height as u32);
+    //         context.put_image_data(&tmp_image_data, tmp_width, tmp_height);
+    //         *width = tmp_width;
+    //         *height = tmp_height;
             
-            context.begin_path();
-            context.move_to(event.offset_x() as f64, event.offset_y() as f64);
-            pressed.set(true);
-        }) as Box<dyn FnMut(_)>);
-        canvas.add_event_listener_with_callback("mousedown", closure.as_ref().unchecked_ref())?;
-        closure.forget();
-    }
-    
-    {
-        let context = context.clone();
-        let pressed = pressed.clone();
-
-        let closure = Closure::wrap(Box::new(move |event: web_sys::MouseEvent| {
-            if pressed.get() {
-                m.sendMessage("sending message on mouse move and pressed");
-                context.line_to(event.offset_x() as f64, event.offset_y() as f64);
-                context.stroke();
-                context.begin_path();
-                context.move_to(event.offset_x() as f64, event.offset_y() as f64);
-            }
-        }) as Box<dyn FnMut(_)>);
-
-        canvas.add_event_listener_with_callback("mousemove", closure.as_ref().unchecked_ref())?;
-        closure.forget();
-    }
-
-    {
-        let context = context.clone();
-        let pressed = pressed.clone();
-
-        let closure = Closure::wrap(Box::new(move |event: web_sys::MouseEvent| {
-            pressed.set(false);
-            context.line_to(event.offset_x() as f64, event.offset_y() as f64);
-            context.stroke();
-        }) as Box<dyn FnMut(_)>);
-
-        canvas.add_event_listener_with_callback("mouseup", closure.as_ref().unchecked_ref())?;
-        closure.forget();
-    }
-    {
-        let context = context.clone();
-
-        let closure = Closure::wrap(Box::new(move |event: web_sys::InputEvent| {
-            let color = &event
-                .target().unwrap()
-                .dyn_ref::<web_sys::HtmlInputElement>().unwrap()
-                .value();
-            // log(color);
-            context.set_stroke_style(&JsValue::from_str(color));
-        }) as Box<dyn FnMut(_)>);
-
-        document
-            .get_element_by_id("color-picker")
-            .expect("document should have .color-picker on DOM")
-            .dyn_ref::<web_sys::HtmlElement>()
-            .expect(".color-picker should be an HtmlElement")
-            .add_event_listener_with_callback("input", closure.as_ref().unchecked_ref())?;
-        closure.forget();
-    }
+    //         log(&width.to_string());
+    //         log(&"resize event".to_string());
+    //     }) as Box<dyn FnMut(_)>);
+        
+    //     window.add_event_listener_with_callback("resize", window_resize_closure.as_ref().unchecked_ref())?;
+    //     window_resize_closure.forget();
+    // }
     Ok(())
 }
 

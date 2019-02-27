@@ -3,28 +3,19 @@
   padding: 0px;
 }
 
-.wasm-bindgen-examples {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 40%; 
+html {
+  height: 100%;
 }
 
-.example-button {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+body {
+  position: relative;
+  height: 100%;
 }
 
-.fibonacci-container {
-  text-align: center;
+.doodle-menu {
+  z-index: 2;
 }
 
-#fibonacci-input-field {
-  display: inline-block;
-  margin-right: 10px;
-}
-
-#fibonacci-input {
-  display: inline-block;
+#myapp-canvas {
+  z-index: 1;
 }

@@ -1,6 +1,6 @@
 import { start_doodle } from 'jji421-myapp';
 
-const port = 'ws://localhost:5000/ws';
+const port = 'ws://localhost:5000/api/doodle';
 
 start_doodle(port);
 export function onReceiveMessage(evt: MessageEvent) {
