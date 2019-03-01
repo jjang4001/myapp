@@ -8,6 +8,9 @@
 
 <body>
   <div class="background">
+    <div id="canvas-area">
+      <canvas id="myapp-canvas"></canvas>
+    </div>
     <div class="doodle-menu">
       <h1>Menu</h1>
       <input type="color" id="color-picker" value="#ff0000">
@@ -16,7 +19,9 @@
       <div>width:</div>
       <input type="range" id="width-slider" min="1" max="10" value="3">
     </div>
-    <div id="wasm-message-window"></div>
+    <div style="max-height: 256px;max-width:256px;overflow: scroll; border: solid black; padding: 20px;">
+      <canvas width="512px" height="512px"></canvas>
+    </div>
   </div>
-  </div>
+  <div id="wasm-message-window"></div>
 </body>

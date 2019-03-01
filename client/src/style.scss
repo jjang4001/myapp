@@ -4,18 +4,47 @@
 }
 
 html {
-  height: 100%;
+  max-height: 100%;
+  display: block;
 }
 
 body {
   position: relative;
   height: 100%;
+  overflow: hidden;
+}
+
+.background {
+  display: block;
+  overflow: scroll;
+  overflow-y:scroll;
+  background-color: #dae1ff;
+  width: 1300px;
+  height: 1000px;
+  margin: 30px;
 }
 
 .doodle-menu {
   z-index: 2;
 }
 
-#myapp-canvas {
-  z-index: 1;
+#canvas-area {
+  width: 500px;
+  height: 500px;
+  position: relative;
+  overflow: scroll;
+  border: 2px solid blue;
 }
+
+#myapp-canvas {
+  position: absolute;
+  background-color: white;
+  // z-index: 1;
+  margin: 30px;
+  border: solid black; // adds 6 px
+  // overflow: scroll;
+}
+
+body{ background-color: ivory; padding:50px; }
+canvas{position:absolute; border:1px solid red;}
+#parent{position:relative; overflow:scroll; width:300px; height:300px; border:2px solid blue; }

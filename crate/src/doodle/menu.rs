@@ -34,7 +34,6 @@ pub fn handle_alpha_input_event(context: &Rc<web_sys::CanvasRenderingContext2d>,
             .dyn_ref::<web_sys::HtmlInputElement>().unwrap()
             .value()
             .parse::<f64>().unwrap();
-        
         context.set_global_alpha(*alpha);
     }) as Box<dyn FnMut(_)>);
 
@@ -44,7 +43,6 @@ pub fn handle_alpha_input_event(context: &Rc<web_sys::CanvasRenderingContext2d>,
         .expect("#alpha-slider should be an HtmlElement")
         .add_event_listener_with_callback("input", alpha_slider_closure.as_ref().unchecked_ref())
         .expect("event listener should be added");
-        
     alpha_slider_closure.forget();
 }
 
@@ -57,8 +55,6 @@ pub fn handle_width_input_event(context: &Rc<web_sys::CanvasRenderingContext2d>,
             .dyn_ref::<web_sys::HtmlInputElement>().unwrap()
             .value()
             .parse::<f64>().unwrap();
-        log(&width.to_string());
-        
         context.set_line_width(*width);
     }) as Box<dyn FnMut(_)>);
 
@@ -70,12 +66,4 @@ pub fn handle_width_input_event(context: &Rc<web_sys::CanvasRenderingContext2d>,
         .expect("event listener should be added");
         
     width_slider_closure.forget();
-}
-
-#[wasm_bindgen]
-extern "C" {
-    // Use `js_namespace` here to bind `console.log(..)` instead of just
-    // `log(..)`
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
 }
