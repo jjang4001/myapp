@@ -477,6 +477,7 @@ var UIColorPicker = (function UIColorPicker() {
 		info.textContent = title;
 		info.className = 'name';
 		input.setAttribute('type', 'text');
+		input.id = `color-picker-${title}`
 
 		wrapper.appendChild(info);
 		wrapper.appendChild(input);

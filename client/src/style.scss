@@ -32,19 +32,26 @@ body {
   text-align: center;
 }
 
+#container {
+  float: right;
+}
+
 .doodle-menu {
   z-index: 2;
   align-self: start;
   justify-self: end;
   float: right;
-  position: absolute;
+  position: relative;
   right: 0px;
+  width: 420px;
+  padding-right: 30px;
+  border: solid black;
 }
 
 #canvas-area {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: relative;
   overflow: scroll;
   display: flex;
   align-items: center;
@@ -77,7 +84,8 @@ ul li:hover {
 
  .ui-color-picker {
 	width: 420px;
-	margin: 0;
+  margin: 0;
+  height: auto;
 	border: 1px solid #DDD;
 	background-color: #FFF;
 	display: table;
