@@ -4,24 +4,36 @@
 <head>
   <meta charset="UTF-8">
   <title>My App</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
   <div class="background">
     <div id="canvas-area">
       <canvas id="myapp-canvas"></canvas>
+      <div class="myapp-header">Hello</div>
     </div>
     <div class="doodle-menu">
-      <h1>Menu</h1>
-      <input type="color" id="color-picker" value="#ff0000">
-      <div>alpha:</div>
-      <input type="range" id="alpha-slider" min="0" max="1" step="0.1" value="1">
-      <div>width:</div>
-      <input type="range" id="width-slider" min="1" max="10" value="3">
+      <div id="picker" class="block">
+        <div class="ui-color-picker" data-topic="picker" data-mode="HSL"></div>
+      </div>
     </div>
-    <div style="max-height: 256px;max-width:256px;overflow: scroll; border: solid black; padding: 20px;">
-      <canvas width="512px" height="512px"></canvas>
-    </div>
+  </div>
+  <div class="doodle-menu">
+    <ul>
+      <li>
+        <input type="color" id="color-picker" value="#ff0000">
+        <span><i class="material-icons">palette</i></span>
+      </li>
+      <li>
+        <input type="range" id="alpha-slider" min="0" max="1" step="0.1" value="1">
+        <span><i class="material-icons">invert_colors</i></span>
+      </li>
+      <li>
+        <input type="range" id="width-slider" min="1" max="10" value="3">
+        <span><i class="material-icons">bubble_chart</i></span>
+      </li>
+    </ul>
   </div>
   <div id="wasm-message-window"></div>
 </body>

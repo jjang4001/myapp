@@ -33,10 +33,12 @@ fn handle_context_events(window: web_sys::Window, document: web_sys::Document, c
     let context = Rc::new(context);
     let pressed = Rc::new(Cell::new(false));
 
-    let mut width = window.inner_width().unwrap().as_f64().unwrap();
-    let mut height = window.inner_height().unwrap().as_f64().unwrap();
-    canvas.set_width((width - 60.0) as u32);
-    canvas.set_height((height - 60.0) as u32);
+    // let mut width = window.inner_width().unwrap().as_f64().unwrap();
+    // let mut height = window.inner_height().unwrap().as_f64().unwrap();
+    // canvas.set_width((width - 60.0) as u32);
+    // canvas.set_height((height - 60.0) as u32);
+    canvas.set_width(2000);
+    canvas.set_height(2000);
 
     context.set_stroke_style(&JsValue::from_str("#ff0000"));
     context.set_global_alpha(1.0);

@@ -6,6 +6,7 @@ const WasmPackPlugin = require('@wasm-tool/wasm-pack-plugin');
 module.exports = {
   entry: {
     app: path.join(__dirname, '../src/app/bootstrap.js'),
+    color: path.join(__dirname, '../src/app/color/color.js'),
   },
   output: {
     path: path.join(__dirname, '../dist/js'),
