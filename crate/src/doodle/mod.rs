@@ -36,7 +36,7 @@ fn handle_context_events(document: web_sys::Document, context: web_sys::CanvasRe
     canvas.set_width(2000);
     canvas.set_height(2000);
 
-    context.set_stroke_style(&JsValue::from_str("#ff0000"));
+    context.set_stroke_style(&JsValue::from_str("#000000"));
     context.set_global_alpha(1.0);
     context.set_line_width(3.0);
 
@@ -44,9 +44,9 @@ fn handle_context_events(document: web_sys::Document, context: web_sys::CanvasRe
     canvas::handle_mousemove_event(&context, &pressed, &canvas, m);
     canvas::handle_mouseup_event(&context, &pressed, &canvas);
 
-    menu::handle_alpha_input_event(&context, &document);
     menu::handle_width_input_event(&context, &document);
     menu::handle_color_event(&context, &document);
+    menu::handle_color_picker_input_event(&context, &document);
 
     Ok(())
 }
