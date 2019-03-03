@@ -13,6 +13,9 @@ body {
   position: relative;
   height: 100%;
   width: 100%;
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight: lighter;
+  color: rgb(80, 80, 80);
   // overflow: hidden;
 }
 
@@ -26,16 +29,40 @@ body {
   // margin: 30px;
 }
 
-.myapp-header {
+.main {
   z-index: 3;
   position: absolute;
   text-align: center;
+  top: 30%;
+  font-weight: lighter;
+  color: gray;
+}
+
+.main .header {
+  font-size: 2rem;
+  font-weight: lighter;
+  padding-bottom: 2rem;
+}
+
+.nav {
+  text-decoration: none;
+  list-style-type: none;
+}
+
+.nav li {
+  text-align: center;
+}
+
+.nav li:hover {
+  background-color: gray;
+  cursor: pointer;
+  color: white;
 }
 
 #container {
-//   float: right;
   position: absolute;
   z-index: 3;
+  width: 220px;
 }
 
 #containerheader {
@@ -64,11 +91,22 @@ body {
   justify-content: center;
 }
 
-#myapp-canvas {
+#canvas {
   position: absolute;
   background-color: white;
   border: solid black;
   z-index: 2;
+}
+
+#size-container {
+  margin: 5px;
+  width: 100%;
+  float: left;
+  padding: 5px;
+}
+
+#size-slider {
+  width: 80%;
 }
 
 ul {
@@ -406,7 +444,6 @@ ul li:hover {
 
 #picker {
 	padding: 10px;
-	width: 980px;
 }
 
 .ui-color-picker {

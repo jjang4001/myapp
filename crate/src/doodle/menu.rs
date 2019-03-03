@@ -3,35 +3,35 @@ use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
-pub fn handle_width_input_event(context: &Rc<web_sys::CanvasRenderingContext2d>, document: &web_sys::Document) {
+pub fn handle_doodle_size_input_event(context: &Rc<web_sys::CanvasRenderingContext2d>, document: &web_sys::Document) {
     let context = context.clone();
 
-    let width_slider_closure = Closure::wrap(Box::new(move |event: web_sys::InputEvent| {
-        let width = &event
+    let size_slider_closure = Closure::wrap(Box::new(move |event: web_sys::InputEvent| {
+        let size = &event
             .target().unwrap()
             .dyn_ref::<web_sys::HtmlInputElement>().unwrap()
             .value()
             .parse::<f64>().unwrap();
-        context.set_line_width(*width);
+        context.set_line_width(*size);
     }) as Box<dyn FnMut(_)>);
 
     document
-        .get_element_by_id("width-slider")
+        .get_element_by_id("size-slider")
         .expect("document should have #alpha-slider on DOM")
         .dyn_ref::<web_sys::HtmlElement>()
         .expect("#alpha-slider should be an HtmlElement")
-        .add_event_listener_with_callback("input", width_slider_closure.as_ref().unchecked_ref())
+        .add_event_listener_with_callback("input", size_slider_closure.as_ref().unchecked_ref())
         .expect("event listener should be added");
         
-    width_slider_closure.forget();
+    size_slider_closure.forget();
 }
 
 pub fn handle_color_event(context: &Rc<web_sys::CanvasRenderingContext2d>, document: &web_sys::Document) {
     let context = context.clone();
 
     let color_picker = document
-        .get_element_by_id("myapp-color-picker")
-        .expect("document should have #myapp-color-picker on DOM")
+        .get_element_by_id("color-picker")
+        .expect("document should have #color-picker on DOM")
         .dyn_into::<web_sys::HtmlElement>()
         .unwrap();
 
@@ -62,7 +62,7 @@ pub fn handle_color_event(context: &Rc<web_sys::CanvasRenderingContext2d>, docum
 pub fn handle_color_picker_input_event(context: &Rc<web_sys::CanvasRenderingContext2d>, document: &web_sys::Document) {
     let context = context.clone();
 
-    let input_element_ids: [str; 6] = ["color-picker-H", "color-picker-S", "color-picker-L", "color-picker-R", "color-picker-G", "color-picker-B"];
+    // let input_element_ids: [str; 6] = ["color-picker-H", "color-picker-S", "color-picker-L", "color-picker-R", "color-picker-G", "color-picker-B"];
 
     let h = document.get_element_by_id("color-picker-H").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
     let s = document.get_element_by_id("color-picker-S").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();

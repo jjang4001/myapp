@@ -513,8 +513,19 @@ var UIColorPicker = (function UIColorPicker() {
 	/*************************************************************************/
 
 	ColorPicker.prototype.updateColor = function updateColor(e) {
-		var x = e.pageX - this.picking_area.offsetLeft;
-		var y = e.pageY - this.picking_area.offsetTop;
+		const container = document.getElementById('container');
+		var offsetLeft = container.style.left;
+		var offsetTop = container.style.top;
+		console.log(offsetLeft, offsetTop);
+		offsetLeft = parseInt(offsetLeft.substring(0, offsetLeft.length - 2));
+		offsetTop = parseInt(offsetTop.substring(0, offsetTop.length - 2));
+		console.log(offsetLeft, offsetTop);
+
+		// var x = e.pageX - this.picking_area.offsetLeft;
+		// var y = e.pageY - this.picking_area.offsetTop;
+		var x = e.pageX - offsetLeft - this.picking_area.offsetLeft;
+		var y = e.pageY - offsetTop - this.picking_area.offsetTop;
+		console.log(x, y);
 		var picker_offset = 5;
 
 		// width and height should be the same
@@ -552,7 +563,12 @@ var UIColorPicker = (function UIColorPicker() {
 	};
 
 	ColorPicker.prototype.updateHueSlider = function updateHueSlider(e) {
-		var x = e.pageX - this.hue_area.offsetLeft;
+		const container = document.getElementById('container');
+		var offsetLeft = container.style.left;
+
+		offsetLeft = parseInt(offsetLeft.substring(0, offsetLeft.length - 2));
+
+		var x = e.pageX - this.hue_area.offsetLeft - offsetLeft;
 		var width = this.hue_area.clientWidth;
 
 		if (x < 0) x = 0;
@@ -567,7 +583,12 @@ var UIColorPicker = (function UIColorPicker() {
 	};
 
 	ColorPicker.prototype.updateAlphaSlider = function updateAlphaSlider(e) {
-		var x = e.pageX - this.alpha_area.offsetLeft;
+		const container = document.getElementById('container');
+		var offsetLeft = container.style.left;
+
+		offsetLeft = parseInt(offsetLeft.substring(0, offsetLeft.length - 2));
+
+		var x = e.pageX - this.alpha_area.offsetLeft - offsetLeft;
 		var width = this.alpha_area.clientWidth;
 
 		if (x < 0) x = 0;
@@ -824,9 +845,9 @@ var UIColorPicker = (function UIColorPicker() {
 
 })();
 
-window.addEventListener("load", function () {
-	ColorPickerTool.init();
-});
+// window.addEventListener("load", function () {
+// 	ColorPickerTool.init();
+// });
 
 var ColorPickerTool = (function ColorPickerTool() {
 
@@ -839,3 +860,5 @@ var ColorPickerTool = (function ColorPickerTool() {
 	};
 
 })();
+
+module.exports = ColorPickerTool;

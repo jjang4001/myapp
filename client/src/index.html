@@ -10,14 +10,26 @@
 <body>
   <div class="background">
     <div id="canvas-area">
-      <canvas id="myapp-canvas"></canvas>
-      <div class="myapp-header">Hello</div>
+      <canvas id="canvas"></canvas>
+      <div class="main">
+        <h1 class="header">Junwon Jang</h1>
+        <div class="nav">
+          <li>about</li>
+          <li>contact</li>
+          <li>Draw!</li>
+        </div>
+      </div>
     </div>
   </div>
-  <div id="container">
+  <div id="container" style="top: 0px; left: 0px;">
     <div id="containerheader">Click here to move</div>
     <div id="picker" class="block">
-      <div class="ui-color-picker" id="myapp-color-picker" data-topic="picker" data-mode="HSL"></div>
+      <div class="ui-color-picker" id="color-picker" data-topic="picker" data-mode="HSL"></div>
+      <!-- <span><i class="material-icons">bubble_chart</i></span> -->
+      <div id="size-container">
+        size
+        <input type="range" id="size-slider" min="1" max="10" value="3">
+      </div>
     </div>
   </div>
   <div class="doodle-menu">

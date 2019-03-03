@@ -14,10 +14,10 @@ pub fn start_doodle(ws_address: &str) -> Result<(), JsValue> {
     let document = window.document().unwrap();
 
     let canvas = document
-        .get_element_by_id("myapp-canvas")
-        .expect("document should have myapp-canvas on DOM")
+        .get_element_by_id("canvas")
+        .expect("document should have #canvas on DOM")
         .dyn_into::<web_sys::HtmlCanvasElement>()
-        .expect("#myapp-canvas should be a HtmlCanvasElement");
+        .expect("#canvas should be a HtmlCanvasElement");
 
     let context = canvas
         .get_context("2d")?
@@ -44,7 +44,7 @@ fn handle_context_events(document: web_sys::Document, context: web_sys::CanvasRe
     canvas::handle_mousemove_event(&context, &pressed, &canvas, m);
     canvas::handle_mouseup_event(&context, &pressed, &canvas);
 
-    menu::handle_width_input_event(&context, &document);
+    menu::handle_doodle_size_input_event(&context, &document);
     menu::handle_color_event(&context, &document);
     menu::handle_color_picker_input_event(&context, &document);
 
