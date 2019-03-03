@@ -1,8 +1,10 @@
 import { start_doodle } from 'jji421-myapp';
 // import ColorPickerTool from './color/wip-color';
+const ColorPickerTool = require('./color/color');
 
 const port = 'ws://localhost:5000/api/doodle';
 
+ColorPickerTool.init();
 start_doodle(port);
 
 export function onReceiveMessage(evt: MessageEvent) {
@@ -26,6 +28,7 @@ function dragElement(element: HTMLElement) {
     e.preventDefault();
     pos3 = e.clientX;
     pos4 = e.clientY;
+    console.log('mouse position');
     console.log(pos3, pos4);
     document.onmouseup = closeDragElement;
     document.onmousemove = elementDrag;
