@@ -62,6 +62,8 @@ pub fn handle_color_event(context: &Rc<web_sys::CanvasRenderingContext2d>, docum
 pub fn handle_color_picker_input_event(context: &Rc<web_sys::CanvasRenderingContext2d>, document: &web_sys::Document) {
     let context = context.clone();
 
+    let input_element_ids: [str; 6] = ["color-picker-H", "color-picker-S", "color-picker-L", "color-picker-R", "color-picker-G", "color-picker-B"];
+
     let h = document.get_element_by_id("color-picker-H").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
     let s = document.get_element_by_id("color-picker-S").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
     let l = document.get_element_by_id("color-picker-L").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();

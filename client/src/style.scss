@@ -33,7 +33,13 @@ body {
 }
 
 #container {
-  float: right;
+//   float: right;
+  position: absolute;
+  z-index: 3;
+}
+
+#containerheader {
+  cursor: move;
 }
 
 .doodle-menu {
@@ -83,7 +89,8 @@ ul li:hover {
  */
 
  .ui-color-picker {
-	width: 420px;
+  // width: 420px;
+  width: 210px;
   margin: 0;
   height: auto;
 	border: 1px solid #DDD;
