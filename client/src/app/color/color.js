@@ -35,7 +35,6 @@ var UIColorPicker = (function UIColorPicker() {
 
 	Color.prototype.copy = function copy(obj) {
 		if (obj instanceof Color !== true) {
-			console.log('Typeof parameter not Color');
 			return;
 		}
 
@@ -516,16 +515,11 @@ var UIColorPicker = (function UIColorPicker() {
 		const container = document.getElementById('container');
 		var offsetLeft = container.style.left;
 		var offsetTop = container.style.top;
-		console.log(offsetLeft, offsetTop);
 		offsetLeft = parseInt(offsetLeft.substring(0, offsetLeft.length - 2));
 		offsetTop = parseInt(offsetTop.substring(0, offsetTop.length - 2));
-		console.log(offsetLeft, offsetTop);
 
-		// var x = e.pageX - this.picking_area.offsetLeft;
-		// var y = e.pageY - this.picking_area.offsetTop;
 		var x = e.pageX - offsetLeft - this.picking_area.offsetLeft;
 		var y = e.pageY - offsetTop - this.picking_area.offsetTop;
-		console.log(x, y);
 		var picker_offset = 5;
 
 		// width and height should be the same
@@ -778,7 +772,6 @@ var UIColorPicker = (function UIColorPicker() {
 
 	ColorPicker.prototype.setColor = function setColor(color) {
 		if (color instanceof Color !== true) {
-			console.log('Typeof parameter not Color');
 			return;
 		}
 

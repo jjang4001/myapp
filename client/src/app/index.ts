@@ -1,21 +1,26 @@
 import { start_doodle } from 'jji421-myapp';
-// import ColorPickerTool from './color/wip-color';
 const ColorPickerTool = require('./color/color');
 
 const port = 'ws://localhost:5000/api/doodle';
 
 ColorPickerTool.init();
-start_doodle(port);
 
-export function onReceiveMessage(evt: MessageEvent) {
-  let val = document.createElement('p');
-  val.innerHTML = evt.data;
-  document.getElementById('wasm-area').appendChild(val);
-}
+// export function onReceiveMessage(evt: MessageEvent) {
+//   let val = document.createElement('p');
+//   val.innerHTML = evt.data;
+//   document.getElementById('wasm-area').appendChild(val);
+// }
 
-dragElement(document.getElementById("container"));
+const drawButton = document.getElementById('draw');
+const colorPickerMenu = document.getElementById('container');
+drawButton.addEventListener('click', (evt: MouseEvent) => {
+  console.log('start drawing');
+  start_doodle(port);
+  dragElement(colorPickerMenu);
+  colorPickerMenu.style.visibility = 'visible';
+});
 
-function dragElement(element: HTMLElement) {
+const dragElement = (element: HTMLElement) => {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   if (document.getElementById(element.id + "header")) {
     document.getElementById(element.id + "header").onmousedown = dragMouseDown;
