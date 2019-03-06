@@ -48,7 +48,6 @@ pub fn handle_color_event(context: &Rc<web_sys::CanvasRenderingContext2d>, docum
         .unwrap();
 
     let color_closure = Closure::wrap(Box::new(move |_event: web_sys::MouseEvent| {
-        log(&"color closure".to_string());
         let color_hex = &hex_input_field.value();
         let alpha = alpha_input_field.value().parse::<f64>().unwrap();
         context.set_stroke_style(&JsValue::from_str(color_hex));

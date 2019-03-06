@@ -3,6 +3,7 @@ use std::rc::Rc;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
+use super::models;
 use super::messaging;
 
 pub fn handle_mousedown_event(context: &Rc<web_sys::CanvasRenderingContext2d>, pressed: &Rc<Cell<bool>>, canvas: &web_sys::HtmlCanvasElement) {
@@ -25,7 +26,21 @@ pub fn handle_mousemove_event(context: &Rc<web_sys::CanvasRenderingContext2d>, p
 
     let closure = Closure::wrap(Box::new(move |event: web_sys::MouseEvent| {
         if pressed.get() {
+            let rgb = context.stroke_style().as_string().unwrap();
+            let alpha = context.global_alpha();
+            let x = event.offset_x() as f64; 
+            let y = event.offset_y() as f64;
+            let size = context.line_width();
+            let stroke = models::stroke::Stroke {
+                rgb: rgb,
+                alpha: alpha,
+                x: x,
+                y: y,
+                size: size,
+            };
+            let msg = stroke.to_string();
             m.sendMessage("sending message on mouse move and pressed");
+            m.sendMessage(&msg);
             context.line_to(event.offset_x() as f64, event.offset_y() as f64);
             context.stroke();
             context.begin_path();

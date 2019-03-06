@@ -4,6 +4,7 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
 use super::messaging;
+use super::models;
 
 mod canvas;
 mod menu;

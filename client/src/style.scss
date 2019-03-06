@@ -30,27 +30,31 @@ body {
 }
 
 .main {
-  z-index: 3;
+  z-index: 2;
   position: absolute;
   text-align: center;
   top: 30%;
   font-weight: lighter;
   color: gray;
+  background-color: white;
+  border: solid rgba(189, 189, 189, 0.35);
 }
 
 .main .header {
   font-size: 2rem;
   font-weight: lighter;
-  padding-bottom: 2rem;
+  padding: 1rem 2rem;
 }
 
 .nav {
   text-decoration: none;
   list-style-type: none;
+  padding: 1rem 2rem 2rem 2rem;
 }
 
 .nav li {
   text-align: center;
+  padding: 0.125rem;
 }
 
 .nav li:hover {
@@ -64,6 +68,11 @@ body {
   z-index: 3;
   width: 220px;
   visibility: hidden;
+}
+
+#doodle-button:hover {
+  background: #fff;
+  box-shadow: inset 0px 0px 77px #dedede;
 }
 
 #containerheader {
@@ -90,13 +99,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #f2f2f2;
 }
 
 #canvas {
   position: absolute;
   background-color: white;
-  border: solid black;
+  border: solid lightgray;
   z-index: 2;
+  visibility: hidden;
 }
 
 #size-container {
@@ -108,19 +119,6 @@ body {
 
 #size-slider {
   width: 80%;
-}
-
-ul {
-  list-style-type: none;
-}
-
-li {
-  text-align: right;
-}
-
-ul li:hover {
-  background: #fff;
-  box-shadow: inset 0px 0px 77px #dedede;
 }
 
 /*

@@ -5,3 +5,4 @@ extern crate web_sys;
 mod examples;
 mod messaging;
 mod doodle;
+mod models;

@@ -5,19 +5,15 @@ const port = 'ws://localhost:5000/api/doodle';
 
 ColorPickerTool.init();
 
-// export function onReceiveMessage(evt: MessageEvent) {
-//   let val = document.createElement('p');
-//   val.innerHTML = evt.data;
-//   document.getElementById('wasm-area').appendChild(val);
-// }
-
-const drawButton = document.getElementById('draw');
+const drawMenuButton = document.getElementById('draw');
 const colorPickerMenu = document.getElementById('container');
-drawButton.addEventListener('click', (evt: MouseEvent) => {
-  console.log('start drawing');
+const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+
+drawMenuButton.addEventListener('click', (evt: MouseEvent) => {
   start_doodle(port);
   dragElement(colorPickerMenu);
   colorPickerMenu.style.visibility = 'visible';
+  canvas.style.visibility = 'visible';
 });
 
 const dragElement = (element: HTMLElement) => {
