@@ -24,7 +24,6 @@ pub fn handle_mousemove_event(
     context: &Rc<web_sys::CanvasRenderingContext2d>,
     pressed: &Rc<Cell<bool>>,
     canvas: &web_sys::HtmlCanvasElement,
-    m: messaging::Messenger,
     a: messaging::messenger::Messenger
 ) {
     let context = context.clone();
@@ -45,8 +44,7 @@ pub fn handle_mousemove_event(
                 size: size,
             };
             let msg = stroke.to_string();
-            a.send_message(&"helloooooo");
-            m.sendMessage(&msg);
+            a.send_message(&msg);
             context.line_to(event.offset_x() as f64, event.offset_y() as f64);
             context.stroke();
             context.begin_path();

@@ -1,4 +1,5 @@
 use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
 
 pub struct Messenger {
     ws: web_sys::WebSocket,
@@ -7,13 +8,13 @@ pub struct Messenger {
 
 impl Messenger {
     pub fn send_message(&self, msg: &str) {
-        log(&"sending message from rust messenger".to_string());
         self.ws.send_with_str(msg).unwrap();
     }
 
-    fn _on_receive_message(&self, _evt: web_sys::MessageEvent) {
+    // fn on_receive_message(&self, _evt: web_sys::MessageEvent) {
+    //     log(&"received message".to_string());
 
-    }
+    // }
 
     fn _on_close_connection(&self) {
 
@@ -21,13 +22,21 @@ impl Messenger {
 
     pub fn new(ws_address: &str, context: std::rc::Rc<web_sys::CanvasRenderingContext2d>) -> Messenger {
         let socket = web_sys::WebSocket::new(ws_address).unwrap();
-        // let context = context.clone();
+        let closure = Closure::wrap(Box::new(move |event: web_sys::MessageEvent| {
+            log(&"received message".to_string());
+        }) as Box<dyn FnMut(_)>);
+
+        // let a = Some(&closure);
+
+        socket.set_onmessage(Some(closure.as_ref().unchecked_ref()));
+        closure.forget();
         Messenger {
             ws: socket,
             context,
         }
     }
 }
+
 
 #[wasm_bindgen]
 extern "C" {
