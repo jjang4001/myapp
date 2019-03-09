@@ -2,8 +2,9 @@ use wasm_bindgen::prelude::*;
 use web_sys::{MessageEvent};
 
 extern crate js_sys;
+pub mod messenger;
 
-#[wasm_bindgen(module = "../src/doodle/messaging")]
+#[wasm_bindgen(module = "../src/messaging/messaging")]
 extern "C" {
     pub fn name() -> String;
     pub type Messenger;

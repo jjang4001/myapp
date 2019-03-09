@@ -34,6 +34,10 @@ fn handle_context_events(document: web_sys::Document, context: web_sys::CanvasRe
     let context = Rc::new(context);
     let pressed = Rc::new(Cell::new(false));
 
+    let messenger_context = context.clone();
+    let a = messaging::messenger::Messenger::new(ws_address, messenger_context);
+    // a.send_message(&"hello".to_string());
+
     canvas.set_width(2000);
     canvas.set_height(2000);
 
@@ -42,12 +46,13 @@ fn handle_context_events(document: web_sys::Document, context: web_sys::CanvasRe
     context.set_line_width(3.0);
 
     canvas::handle_mousedown_event(&context, &pressed, &canvas);
-    canvas::handle_mousemove_event(&context, &pressed, &canvas, m);
+    canvas::handle_mousemove_event(&context, &pressed, &canvas, m, a);
     canvas::handle_mouseup_event(&context, &pressed, &canvas);
 
     menu::handle_doodle_size_input_event(&context, &document);
     menu::handle_color_event(&context, &document);
     menu::handle_color_picker_input_event(&context, &document);
+    // a.send_message(&"bye".to_string());
 
     Ok(())
 }

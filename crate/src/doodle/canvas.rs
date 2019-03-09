@@ -20,7 +20,13 @@ pub fn handle_mousedown_event(context: &Rc<web_sys::CanvasRenderingContext2d>, p
     closure.forget(); 
 }
 
-pub fn handle_mousemove_event(context: &Rc<web_sys::CanvasRenderingContext2d>, pressed: &Rc<Cell<bool>>, canvas: &web_sys::HtmlCanvasElement, m: messaging::Messenger) {
+pub fn handle_mousemove_event(
+    context: &Rc<web_sys::CanvasRenderingContext2d>,
+    pressed: &Rc<Cell<bool>>,
+    canvas: &web_sys::HtmlCanvasElement,
+    m: messaging::Messenger,
+    a: messaging::messenger::Messenger
+) {
     let context = context.clone();
     let pressed = pressed.clone();
 
@@ -39,7 +45,7 @@ pub fn handle_mousemove_event(context: &Rc<web_sys::CanvasRenderingContext2d>, p
                 size: size,
             };
             let msg = stroke.to_string();
-            m.sendMessage("sending message on mouse move and pressed");
+            a.send_message(&"helloooooo");
             m.sendMessage(&msg);
             context.line_to(event.offset_x() as f64, event.offset_y() as f64);
             context.stroke();
