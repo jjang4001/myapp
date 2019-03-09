@@ -1,5 +1,9 @@
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
+use serde_json::Result;
+use serde::{Deserialize, Serialize};
+
+use super::models;
 
 pub struct Messenger {
     ws: web_sys::WebSocket,
@@ -22,11 +26,17 @@ impl Messenger {
 
     pub fn new(ws_address: &str, context: std::rc::Rc<web_sys::CanvasRenderingContext2d>) -> Messenger {
         let socket = web_sys::WebSocket::new(ws_address).unwrap();
-        let closure = Closure::wrap(Box::new(move |event: web_sys::MessageEvent| {
-            log(&"received message".to_string());
-        }) as Box<dyn FnMut(_)>);
 
-        // let a = Some(&closure);
+        // let context2 = context.clone();
+
+        let closure = Closure::wrap(Box::new(move |event: web_sys::MessageEvent| {
+            log(&event.data().as_string().unwrap());
+            // use received message to draw
+            let b = &event.data().as_string().unwrap();
+
+            let stroke: models::stroke::Stroke = serde_json::from_str(b).unwrap();
+            log(&stroke.rgb);
+        }) as Box<dyn FnMut(_)>);
 
         socket.set_onmessage(Some(closure.as_ref().unchecked_ref()));
         closure.forget();
@@ -37,6 +47,12 @@ impl Messenger {
     }
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+struct Greeting {
+    status: String,
+    content: String,
+    num: f64,
+}
 
 #[wasm_bindgen]
 extern "C" {

@@ -77,15 +77,16 @@ func (c *Client) writePump() {
 				return
 			}
 
-			msg := models.NewMessage(string(message))
-			fmt.Println(msg)
+			msg := models.NewStroke(string(message))
+			fmt.Println(*msg)
 			if err := c.conn.WriteJSON(*msg); err != nil {
 				return
 			}
 
 			n := len(c.send)
 			for i := 0; i < n; i++ {
-				msg = models.NewMessage(string(<-c.send))
+				msg = models.NewStroke(string(<-c.send))
+				fmt.Println(msg)
 				if err := c.conn.WriteJSON(msg); err != nil {
 					return
 				}

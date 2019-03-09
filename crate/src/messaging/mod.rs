@@ -1,6 +1,8 @@
 use wasm_bindgen::prelude::*;
 use web_sys::{MessageEvent};
 
+use super::models;
+
 extern crate js_sys;
 pub mod messenger;
 

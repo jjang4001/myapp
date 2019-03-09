@@ -1,5 +1,7 @@
 use std::string::ToString;
+use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize)]
 pub struct Stroke {
     pub rgb: String,
     pub alpha: f64,
@@ -7,6 +9,12 @@ pub struct Stroke {
     pub y: f64,
     pub size: f64,
 }
+
+// impl Stroke {
+//     pub fn new(stroke_string: &str) -> Stroke {
+
+//     } 
+// }
 
 impl ToString for Stroke {
     fn to_string(&self) -> String {
