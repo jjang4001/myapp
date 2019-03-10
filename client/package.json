@@ -27,7 +27,7 @@
   "author": "Junwon Jang",
   "dependencies": {
     "express": "^4.16.3",
-    "jji421-myapp": "0.1.0"
+    "jji421-myapp": "1.0.0"
   },
   "devDependencies": {
     "@types/dom-inputevent": "^1.0.4",
