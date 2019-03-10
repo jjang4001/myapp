@@ -17,7 +17,7 @@ impl Messenger {
     }
 
     fn _on_close_connection(&self) {
-
+        log(&"connection closed".to_string());
     }
 
     pub fn new(ws_address: &str, context: std::rc::Rc<web_sys::CanvasRenderingContext2d>) -> Messenger {
@@ -73,20 +73,21 @@ impl Messenger {
             response_context.set_line_width(prev_size);
         }) as Box<dyn FnMut(_)>);
 
+        let close_connection_closure = Closure::wrap(Box::new(move |event: web_sys::CloseEvent| {
+            log(&"connection closed.".to_string());
+        }) as Box<dyn FnMut(_)>);
+
         socket.set_onmessage(Some(closure.as_ref().unchecked_ref()));
+        socket.set_onclose(Some(close_connection_closure.as_ref().unchecked_ref()));
+    
         closure.forget();
+        close_connection_closure.forget();
+        
         Messenger {
             ws: socket,
             context,
         }
     }
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Greeting {
-    status: String,
-    content: String,
-    num: f64,
 }
 
 #[wasm_bindgen]

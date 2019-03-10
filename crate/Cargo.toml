@@ -24,6 +24,7 @@ wee_alloc = { version = "0.4.2", optional = true }
 version = "0.3.14"
 features = [
   'CanvasRenderingContext2d',
+  'CloseEvent',
   'CssStyleDeclaration',
   'console',
   'Document',
