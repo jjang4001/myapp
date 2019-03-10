@@ -59,6 +59,7 @@ pub fn handle_mousemove_event(
             let x = event.offset_x() as f64; 
             let y = event.offset_y() as f64;
             let size = context.line_width();
+            // 
             let stroke = models::stroke::Stroke {
                 rgb: rgb,
                 alpha: alpha,

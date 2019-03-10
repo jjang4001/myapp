@@ -61,16 +61,6 @@ pub fn handle_color_event(context: &Rc<web_sys::CanvasRenderingContext2d>, docum
 pub fn handle_color_picker_input_event(context: &Rc<web_sys::CanvasRenderingContext2d>, document: &web_sys::Document) {
     let context = context.clone();
 
-    // let input_element_ids: [str; 6] = ["color-picker-H", "color-picker-S", "color-picker-L", "color-picker-R", "color-picker-G", "color-picker-B"];
-
-    let h = document.get_element_by_id("color-picker-H").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
-    let s = document.get_element_by_id("color-picker-S").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
-    let l = document.get_element_by_id("color-picker-L").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
-
-    let r = document.get_element_by_id("color-picker-R").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
-    let g = document.get_element_by_id("color-picker-G").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
-    let b = document.get_element_by_id("color-picker-B").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
-
     let alpha_input_field = document.get_element_by_id("color-picker-alpha").unwrap().dyn_into::<web_sys::HtmlInputElement>().unwrap();
     let alpha_input_field_copy = alpha_input_field.clone();
 

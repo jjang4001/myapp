@@ -20,8 +20,8 @@ pub fn start_doodle(ws_address: &str) -> Result<(), JsValue> {
         .dyn_into::<web_sys::HtmlCanvasElement>()
         .expect("#canvas should be a HtmlCanvasElement");
 
-    canvas.set_width(2000);
-    canvas.set_height(2000);
+    canvas.set_width(3840);
+    canvas.set_height(2160);
 
     let context = canvas
         .get_context("2d")?

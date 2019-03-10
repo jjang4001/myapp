@@ -1,7 +1,5 @@
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
-use serde_json::Result;
-use serde::{Deserialize, Serialize};
 use std::convert::AsRef;
 
 use super::models;
@@ -73,7 +71,7 @@ impl Messenger {
             response_context.set_line_width(prev_size);
         }) as Box<dyn FnMut(_)>);
 
-        let close_connection_closure = Closure::wrap(Box::new(move |event: web_sys::CloseEvent| {
+        let close_connection_closure = Closure::wrap(Box::new(move |_event: web_sys::CloseEvent| {
             log(&"connection closed.".to_string());
         }) as Box<dyn FnMut(_)>);
 
