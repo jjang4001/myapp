@@ -1,4 +1,5 @@
 import { start_doodle } from 'jji421-myapp';
+// import ColorPickerTool from './color/wip-color';
 const ColorPickerTool = require('./color/color');
 
 const port = 'ws://localhost:5000/api/doodle';
