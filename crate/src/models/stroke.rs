@@ -8,6 +8,7 @@ pub struct Stroke {
     pub x: f64,
     pub y: f64,
     pub size: f64,
+    pub endpoint: String,
 }
 
 // impl Stroke {
@@ -18,7 +19,7 @@ pub struct Stroke {
 
 impl ToString for Stroke {
     fn to_string(&self) -> String {
-        format!("{{\"rgb\":{:?},\"alpha\":{:?},\"x\":{:?},\"y\":{:?},\"size\":{:?}}}", self.rgb, self.alpha, self.x, self.y, self.size)
+        format!("{{\"rgb\":{:?},\"alpha\":{:?},\"x\":{:?},\"y\":{:?},\"size\":{:?},\"endpoint\":{:?}}}", self.rgb, self.alpha, self.x, self.y, self.size, self.endpoint)
     }
 }
 

@@ -17,11 +17,12 @@ type Point struct {
 }
 
 type Stroke struct {
-	RGB   string  `json:"rgb"`
-	Alpha float64 `json:"alpha"`
-	X     float64 `json:"x"`
-	Y     float64 `json:"y"`
-	Size  float64 `json:"size"`
+	RGB      string  `json:"rgb"`
+	Alpha    float64 `json:"alpha"`
+	X        float64 `json:"x"`
+	Y        float64 `json:"y"`
+	Size     float64 `json:"size"`
+	Endpoint string  `json:"endpoint"`
 }
 
 func NewStroke(stroke string) *Stroke {

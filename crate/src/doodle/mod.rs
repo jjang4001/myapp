@@ -38,14 +38,15 @@ fn handle_context_events(document: web_sys::Document, context: web_sys::CanvasRe
 
     let messenger_context = context.clone();
     let m = messaging::messenger::Messenger::new(ws_address, messenger_context);
+    let ms = Rc::new(m);
 
     context.set_stroke_style(&JsValue::from_str("#000000"));
     context.set_global_alpha(1.0);
     context.set_line_width(3.0);
 
-    canvas::handle_mousedown_event(&context, &pressed, &canvas);
-    canvas::handle_mousemove_event(&context, &pressed, &canvas, m);
-    canvas::handle_mouseup_event(&context, &pressed, &canvas);
+    canvas::handle_mousedown_event(&context, &pressed, &canvas, &ms);
+    canvas::handle_mousemove_event(&context, &pressed, &canvas, &ms);
+    canvas::handle_mouseup_event(&context, &pressed, &canvas, &ms);
 
     menu::handle_doodle_size_input_event(&context, &document);
     menu::handle_color_event(&context, &document);

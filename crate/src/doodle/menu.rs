@@ -81,7 +81,6 @@ pub fn handle_color_picker_input_event(context: &Rc<web_sys::CanvasRenderingCont
         .unwrap();
 
     let color_input_closure = Closure::wrap(Box::new(move |_event: web_sys::InputEvent| {
-        log(&"input closure".to_string());
         let color_hex = &hex_input_field.value();
         let alpha = alpha_input_field_copy.value().parse::<f64>().unwrap();
         context.set_stroke_style(&JsValue::from_str(color_hex));
@@ -90,12 +89,4 @@ pub fn handle_color_picker_input_event(context: &Rc<web_sys::CanvasRenderingCont
 
     alpha_input_field.add_event_listener_with_callback("input", color_input_closure.as_ref().unchecked_ref()).unwrap();
     color_input_closure.forget();
-}
-
-#[wasm_bindgen]
-extern "C" {
-    // Use `js_namespace` here to bind `console.log(..)` instead of just
-    // `log(..)`
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
 }

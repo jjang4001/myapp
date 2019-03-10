@@ -2,6 +2,7 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use serde_json::Result;
 use serde::{Deserialize, Serialize};
+use std::convert::AsRef;
 
 use super::models;
 
@@ -15,11 +16,6 @@ impl Messenger {
         self.ws.send_with_str(msg).unwrap();
     }
 
-    // fn on_receive_message(&self, _evt: web_sys::MessageEvent) {
-    //     log(&"received message".to_string());
-
-    // }
-
     fn _on_close_connection(&self) {
 
     }
@@ -27,15 +23,54 @@ impl Messenger {
     pub fn new(ws_address: &str, context: std::rc::Rc<web_sys::CanvasRenderingContext2d>) -> Messenger {
         let socket = web_sys::WebSocket::new(ws_address).unwrap();
 
-        // let context2 = context.clone();
+        let response_context = context.clone();
 
         let closure = Closure::wrap(Box::new(move |event: web_sys::MessageEvent| {
-            log(&event.data().as_string().unwrap());
-            // use received message to draw
-            let b = &event.data().as_string().unwrap();
+            // get previous context
+            let prev_stroke_style = response_context.stroke_style().as_string().unwrap();
+            let prev_alpha = response_context.global_alpha();
+            let prev_size = response_context.line_width();
 
-            let stroke: models::stroke::Stroke = serde_json::from_str(b).unwrap();
-            log(&stroke.rgb);
+            let stroke_response = &event.data().as_string().unwrap();
+            let stroke: models::stroke::Stroke = serde_json::from_str(stroke_response).unwrap();
+
+            match stroke.endpoint.as_str() {
+                "START" => {
+                    // set context for received stroke
+                    response_context.set_stroke_style(&JsValue::from_str(&stroke.rgb));
+                    response_context.set_global_alpha(stroke.alpha);
+                    response_context.set_line_width(stroke.size);
+
+                    response_context.begin_path();
+                    response_context.move_to(stroke.x, stroke.y);
+                },
+                "MOVE" => {
+                    // set context for received stroke
+                    response_context.set_stroke_style(&JsValue::from_str(&stroke.rgb));
+                    response_context.set_global_alpha(stroke.alpha);
+                    response_context.set_line_width(stroke.size);
+
+                    response_context.line_to(stroke.x, stroke.y);
+                    response_context.stroke();
+                    response_context.begin_path();
+                    response_context.move_to(stroke.x, stroke.y);
+                },
+                "END" => {
+                    // set context for received stroke
+                    response_context.set_stroke_style(&JsValue::from_str(&stroke.rgb));
+                    response_context.set_global_alpha(stroke.alpha);
+                    response_context.set_line_width(stroke.size);
+
+                    response_context.line_to(stroke.x, stroke.y);
+                    response_context.stroke();
+                },
+                _ => log(&stroke.endpoint),
+            }
+
+            // reset to current context
+            response_context.set_stroke_style(&JsValue::from_str(&prev_stroke_style));
+            response_context.set_global_alpha(prev_alpha);
+            response_context.set_line_width(prev_size);
         }) as Box<dyn FnMut(_)>);
 
         socket.set_onmessage(Some(closure.as_ref().unchecked_ref()));
