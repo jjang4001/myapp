@@ -10,8 +10,8 @@ go run main.go
 ```
 or from the root directory,
 ```
-docker build -t ./ . -f Dockerfile.dev
-docker run --rm -p 8080:3000 jji421/dockergo
+docker build -t jji421/myapp-api . -f Dockerfile 
+docker run -p 5000:5000 jji421/myapp-api
 
 docker run --rm -v "$PWD":/go/src/myapp/api -w /go/src/myapp/api iron/go:dev go build -o myapp
 docker build -t jji421/dockergo:latest .
