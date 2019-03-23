@@ -22,13 +22,11 @@ func main() {
 
 	// handlers
 
-	r.HandleFunc("/api/healthcheck", handlers.HomeHandler)
+	r.HandleFunc("/healthcheck", handlers.HomeHandler)
 
-	r.HandleFunc("/api/doodle", func(w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/doodle", func(w http.ResponseWriter, r *http.Request) {
 		hub.ServeWs(hubServer, w, r)
 	})
-
-	// r.HandleFunc("/api/doodle", handlers.DoodleHandler)
 
 	// middleware
 

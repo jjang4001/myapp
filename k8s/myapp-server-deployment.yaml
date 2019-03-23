@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: server-deployment
+  name: myapp-server-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       component: server
@@ -13,7 +13,8 @@ spec:
         component: server
     spec:
       containers:
-        - name: server
+        - name: myapp-server
           image: jji421/myapp-api
           ports:
             - containerPort: 5000
+    

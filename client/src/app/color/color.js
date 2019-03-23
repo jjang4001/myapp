@@ -513,10 +513,8 @@ var UIColorPicker = (function UIColorPicker() {
 
 	ColorPicker.prototype.updateColor = function updateColor(e) {
 		const container = document.getElementById('container');
-		var offsetLeft = container.style.left;
-		var offsetTop = container.style.top;
-		offsetLeft = parseInt(offsetLeft.substring(0, offsetLeft.length - 2));
-		offsetTop = parseInt(offsetTop.substring(0, offsetTop.length - 2));
+		var offsetLeft = container.offsetLeft;
+		var offsetTop = container.offsetTop;
 
 		var x = e.pageX - offsetLeft - this.picking_area.offsetLeft;
 		var y = e.pageY - offsetTop - this.picking_area.offsetTop;
@@ -558,9 +556,7 @@ var UIColorPicker = (function UIColorPicker() {
 
 	ColorPicker.prototype.updateHueSlider = function updateHueSlider(e) {
 		const container = document.getElementById('container');
-		var offsetLeft = container.style.left;
-
-		offsetLeft = parseInt(offsetLeft.substring(0, offsetLeft.length - 2));
+		var offsetLeft = container.offsetLeft;
 
 		var x = e.pageX - this.hue_area.offsetLeft - offsetLeft;
 		var width = this.hue_area.clientWidth;
@@ -578,9 +574,7 @@ var UIColorPicker = (function UIColorPicker() {
 
 	ColorPicker.prototype.updateAlphaSlider = function updateAlphaSlider(e) {
 		const container = document.getElementById('container');
-		var offsetLeft = container.style.left;
-
-		offsetLeft = parseInt(offsetLeft.substring(0, offsetLeft.length - 2));
+		var offsetLeft = container.offsetLeft;
 
 		var x = e.pageX - this.alpha_area.offsetLeft - offsetLeft;
 		var width = this.alpha_area.clientWidth;
