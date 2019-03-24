@@ -11,7 +11,6 @@
     "build:dev": "webpack --config webpack/webpack.dev.js",
     "start": "NODE_ENV=production node server.js",
     "start:dev": "NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js",
-    "test": "jest-webpack"
   },
   "repository": {
     "type": "git",
