@@ -8,10 +8,10 @@ interface EnvConfig {
 
 const config: Config = {
   development: {
-    doodleSocket: 'ws://localhost:5000/doodle'
+    doodleSocket: 'wss://192.168.99.100/api/doodle'
   },
   production: {
-    doodleSocket: 'ws://junwonjang.dev/api/doodle'
+    doodleSocket: 'wss://junwonjang.dev/api/doodle'
   }
 }
 

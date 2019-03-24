@@ -5,16 +5,17 @@ const ColorPickerTool = require('./color/color');
 
 const doodlePort = config[process.env.NODE_ENV].doodleSocket;
 
+ColorPickerTool.init();
+
 const drawMenuButton = document.getElementById('draw');
 const colorPickerMenu = document.getElementById('container');
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 
 drawMenuButton.addEventListener('click', (evt: MouseEvent) => {
-  ColorPickerTool.init();
-  start_doodle(doodlePort);
   dragElement(colorPickerMenu);
   colorPickerMenu.style.visibility = 'visible';
   canvas.style.visibility = 'visible';
+  start_doodle(doodlePort);
 });
 
 const dragElement = (element: HTMLElement) => {
