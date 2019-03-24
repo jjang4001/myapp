@@ -13,7 +13,7 @@ spec:
         component: web
     spec:
       containers:
-        - name: myapp-client
-          image: jji421/myapp-client:latest
+        - name: client
+          image: jji421/myapp-client
           ports:
             - containerPort: 3000

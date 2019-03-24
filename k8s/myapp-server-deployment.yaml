@@ -13,8 +13,8 @@ spec:
         component: server
     spec:
       containers:
-        - name: myapp-server
-          image: jji421/myapp-api:latest
+        - name: server
+          image: jji421/myapp-api
           ports:
             - containerPort: 5000
     
