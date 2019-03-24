@@ -2,7 +2,6 @@ package hub
 
 import (
 	"bytes"
-	"fmt"
 	"log"
 	"myapp/api/models"
 	"net/http"
@@ -78,7 +77,6 @@ func (c *Client) writePump() {
 			}
 
 			msg := models.NewStroke(string(message))
-			fmt.Println(*msg)
 			if err := c.conn.WriteJSON(*msg); err != nil {
 				return
 			}
@@ -86,7 +84,6 @@ func (c *Client) writePump() {
 			n := len(c.send)
 			for i := 0; i < n; i++ {
 				msg = models.NewStroke(string(<-c.send))
-				fmt.Println(msg)
 				if err := c.conn.WriteJSON(msg); err != nil {
 					return
 				}
