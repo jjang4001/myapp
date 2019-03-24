@@ -16,6 +16,9 @@ before_install:
   - gcloud container clusters get-credentials myapp-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
+script:
+  - docker build -t jji421/test -f ./client/Dockerfile ./client
+
 deploy:
   provider: script
   script: bash ./deploy.sh
