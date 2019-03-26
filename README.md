@@ -65,3 +65,4 @@
     helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
     ```
 12. push to master
+13. Check that it's deployed by going to services and clicking the ip address in gcp
