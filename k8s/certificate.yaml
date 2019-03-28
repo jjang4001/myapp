@@ -1,0 +1,20 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: junwonjang-dev-tls
+spec:
+  secretName: junwonjang-dev
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: junwonjang.dev
+  dnsNames:
+    - junwonjang.dev
+    - www.junwonjang.dev
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains:
+          - junwonjang.dev
+          - www.junwonjang.dev
