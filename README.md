@@ -1,3 +1,5 @@
+NOTE: no longer hosting
+
 ## Deploying with k8s
 
 
